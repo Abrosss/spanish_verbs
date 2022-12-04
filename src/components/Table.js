@@ -21,7 +21,6 @@ function Table({ words, currentWord }) {
             words.filter(word => word.meaning.map(el => el.performer === pronoun && el.mood.includes(mood) && el.tense.includes(tense) ? pronouns.push({ word: word.word, meaning: el }) : pronouns))
             return pronouns
         }
-
     }
     function filter(pronoun, mood, tense) {
         let pronouns = []

@@ -1,6 +1,6 @@
 import axios from 'axios'
 
 export default axios.create({
-    baseURL: 'http://localhost:5000/api'
+    baseURL: 'https://spanish-verbs-api.vercel.app/api'
 })
 
