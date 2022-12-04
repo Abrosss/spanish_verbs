@@ -206,4 +206,14 @@ pre code {
   .table h2 {
     display: none;
   }
+  .apiInfo {
+    margin-top: 2rem;
+    width: 100%;
+  }
+  .apiInfo .request {
+    font-size: 0.6rem;
+  }
+  pre {
+    overflow-x: auto;
+  }
 }/*# sourceMappingURL=styles.css.map */
