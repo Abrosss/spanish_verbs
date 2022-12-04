@@ -27,7 +27,7 @@ function Table({ words, currentWord }) {
         words.filter(word => word.meaning.map(el => el.performer === pronoun && el.mood === mood && el.tense === tense ? pronouns.push({ word: word.word, meaning: el }) : pronouns))
         return pronouns[0].word
     }
-    console.log(getAllVerbs('tú'))
+  
     return (
         <table>
             <tbody>
