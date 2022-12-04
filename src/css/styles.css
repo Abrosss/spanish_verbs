@@ -178,10 +178,16 @@ pre code {
 
 @media only screen and (max-width: 800px) {
   nav {
-    padding-left: 0;
+    flex-direction: column;
+    align-items: center;
   }
   nav a {
     justify-content: center;
+  }
+  nav a:last-child {
+    width: -webkit-min-content;
+    width: -moz-min-content;
+    width: min-content;
   }
   header {
     padding-right: 1rem;

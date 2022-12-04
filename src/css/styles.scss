@@ -187,9 +187,13 @@ pre {
 }
 @media only screen and (max-width: 800px) {
     nav {
-        padding-left: 0;
+        flex-direction: column;
+        align-items: center;
         a {
             justify-content: center;
+           &:last-child{
+            width: min-content;
+           }
         }
     }
     header {
