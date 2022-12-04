@@ -5,23 +5,23 @@ function Table({ words, currentWord }) {
     let pronouns = ['yo', 'tú', "él/ella/usted", 'nosotros/nosotras', 'vosotros/vosotras', 'ellos/ellas/ustedes']
     let tenses = ['Present', 'Preterite', 'Imperfect', 'Conditional', 'Future']
 
-    function getAllVerbs(pronoun, mood, tense) {
-        if(pronoun && !tense && !mood) {
-            let pronouns = []
-            words.filter(word => word.meaning.map(el => el.performer === pronoun ? pronouns.push({ word: word.word, meaning: el }) : pronouns))
-            return pronouns
-        }
-        if(pronoun && mood && !tense) {
-            let pronouns = []
-            words.filter(word => word.meaning.map(el => el.performer === pronoun && el.mood.includes(mood) ? pronouns.push({ word: word.word, meaning: el }) : pronouns))
-            return pronouns
-        }
-        if(pronoun && mood && tense) {
-            let pronouns = []
-            words.filter(word => word.meaning.map(el => el.performer === pronoun && el.mood.includes(mood) && el.tense.includes(tense) ? pronouns.push({ word: word.word, meaning: el }) : pronouns))
-            return pronouns
-        }
-    }
+    // function getAllVerbs(pronoun, mood, tense) {
+    //     if(pronoun && !tense && !mood) {
+    //         let pronouns = []
+    //         words.filter(word => word.meaning.map(el => el.performer === pronoun ? pronouns.push({ word: word.word, meaning: el }) : pronouns))
+    //         return pronouns
+    //     }
+    //     if(pronoun && mood && !tense) {
+    //         let pronouns = []
+    //         words.filter(word => word.meaning.map(el => el.performer === pronoun && el.mood.includes(mood) ? pronouns.push({ word: word.word, meaning: el }) : pronouns))
+    //         return pronouns
+    //     }
+    //     if(pronoun && mood && tense) {
+    //         let pronouns = []
+    //         words.filter(word => word.meaning.map(el => el.performer === pronoun && el.mood.includes(mood) && el.tense.includes(tense) ? pronouns.push({ word: word.word, meaning: el }) : pronouns))
+    //         return pronouns
+    //     }
+    // }
     function filter(pronoun, mood, tense) {
         let pronouns = []
         words.filter(word => word.meaning.map(el => el.performer === pronoun && el.mood === mood && el.tense === tense ? pronouns.push({ word: word.word, meaning: el }) : pronouns))

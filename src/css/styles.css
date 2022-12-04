@@ -6,8 +6,9 @@
 
 nav {
   height: 4rem;
-  padding: 1rem;
-  padding-left: 3rem;
+  padding: 1rem 3rem;
+  display: flex;
+  justify-content: space-between;
 }
 nav img {
   width: 2rem;
@@ -21,6 +22,9 @@ nav a {
   display: flex;
   align-items: center;
   gap: 1rem;
+}
+nav a:last-child {
+  font-weight: 400;
 }
 
 header {
@@ -70,6 +74,14 @@ main {
 .selected {
   background-color: #f0f0f0;
   padding: 0 0.5rem;
+}
+
+.colored {
+  color: rgb(32, 56, 48);
+}
+
+.underline {
+  border-bottom: 1px #000 solid;
 }
 
 form {
@@ -136,6 +148,32 @@ table td:not(:first-child):hover {
 }
 table td:first-child {
   font-weight: bold;
+}
+
+.apiInfo {
+  background-color: #f0f0f0;
+  margin-top: 5rem;
+  padding: 2rem;
+  width: 50%;
+}
+.apiInfo h1 {
+  margin-bottom: 1.5rem;
+}
+.apiInfo p {
+  margin-bottom: 0.8rem;
+}
+
+pre {
+  margin-top: 2rem;
+  background-color: #2d2c4c;
+  padding: 1rem;
+}
+pre code {
+  color: #f0f0f0;
+}
+
+.exampleRequest {
+  color: #6c63ff;
 }
 
 @media only screen and (max-width: 800px) {

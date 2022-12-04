@@ -6,9 +6,9 @@
 
 nav {
     height: 4rem;
-    padding: 1rem;
-    padding-left: 3rem;
-
+    padding: 1rem 3rem;
+    display: flex;
+    justify-content: space-between;
     img {
         width: 2rem;
         height: 2rem;
@@ -22,6 +22,9 @@ nav {
         display: flex;
         align-items: center;
         gap: 1rem;
+        &:last-child {
+            font-weight: 400;
+        }
     }
 
 }
@@ -75,7 +78,12 @@ main {
     background-color: #f0f0f0;
     padding: 0 .5rem;
 }
-
+.colored {
+    color: rgb(32, 56, 48);
+}
+.underline {
+    border-bottom: 1px #000 solid;
+}
 form {
     display: flex;
     width: 50%;
@@ -154,6 +162,29 @@ table {
     }
 }
 
+.apiInfo {
+    background-color: #f0f0f0;
+    margin-top: 5rem;
+    padding: 2rem;
+    width: 50%;
+   h1 {
+    margin-bottom: 1.5rem;
+   }
+   p{
+    margin-bottom: .8rem;
+   }
+}
+pre {
+    margin-top: 2rem;
+    background-color: #2d2c4c;
+    padding: 1rem;
+    code {
+        color: #f0f0f0;
+    }
+}
+.exampleRequest {
+    color:#6c63ff
+}
 @media only screen and (max-width: 800px) {
     nav {
         padding-left: 0;
