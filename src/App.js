@@ -20,7 +20,7 @@ function App() {
 
   const input = useRef()
 
-
+console.log(allWords)
   function validInput(string) {
     let err = 'delete spaces or try again'
     let array = string.split(' ')
