@@ -122,6 +122,24 @@ form button img {
   transform: rotate(90deg);
 }
 
+.moodNavigation {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.moodNavigation .rightArrow {
+  transform: rotate(90deg);
+  cursor: pointer;
+}
+.moodNavigation .leftArrow {
+  transform: rotate(-90deg);
+  cursor: pointer;
+}
+.moodNavigation img {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
 .table,
 .resultPanel {
   display: flex;
@@ -206,11 +224,16 @@ pre code {
   }
   .table {
     width: 100%;
-    flex-direction: row;
+    flex-direction: column;
+    align-items: flex-start;
     overflow-x: scroll;
   }
-  .table h2 {
-    display: none;
+  .table .moodNavigation {
+    position: absolute;
+    left: 0;
+  }
+  .table table {
+    margin-top: 3rem;
   }
   .apiInfo {
     margin-top: 2rem;
