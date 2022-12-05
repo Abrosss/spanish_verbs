@@ -3,16 +3,7 @@ import React from 'react'
 function Table({ words, currentWord, mood, tenses}) {
 
     let pronouns = ['yo', 'tú', "él/ella/usted", 'nosotros/nosotras', 'vosotros/vosotras', 'ellos/ellas/ustedes']
-    // let tenses = [
-    //     {
-    //         mood: "Indicative",
-    //         tenses: ['Present', 'Preterite', 'Imperfect', 'Conditional', 'Future']
-    //     },
-    //     {
-    //         mood: "Subjunctive",
-    //         tenses: ['Present', 'Imperfect', 'Future']
-    //     }
-    // ]
+ 
     
     function filter(pronoun, mood, tense) {
         if(mood === 'Perfect') {
