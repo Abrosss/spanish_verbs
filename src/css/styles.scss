@@ -129,13 +129,20 @@ form {
 .moodNavigation {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 3rem;
+    button {
+        background: transparent;
+        outline: none;
+        border: none;
+        display: flex;
+        align-items: center;
+    }
     .rightArrow {
-        transform: rotate(90deg);
+        transform: rotate(0deg);
         cursor: pointer;
     }
     .leftArrow {
-        transform: rotate(-90deg);
+        transform: rotate(180deg);
         cursor: pointer;
     }
     img {
@@ -152,6 +159,9 @@ form {
     padding: 1.5rem 0;
     padding-bottom: 0;
    
+}
+.table {
+    gap: 2rem;
 }
 .resultPanel {
     text-align: center;
@@ -236,11 +246,14 @@ pre {
         overflow-x: scroll;
         .moodNavigation {
            position: absolute;
-           left: 0;
-        
+           left: 50%;
+           transform: translate(-50%, -50%);
+           margin-top: .5rem;
+           width: 100%;
+           justify-content: center;
         }
         table {
-            margin-top: 3rem;
+            margin-top: 2.5rem;
         }
     }
     .apiInfo {

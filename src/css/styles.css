@@ -128,14 +128,21 @@ form button img {
 .moodNavigation {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 3rem;
+}
+.moodNavigation button {
+  background: transparent;
+  outline: none;
+  border: none;
+  display: flex;
+  align-items: center;
 }
 .moodNavigation .rightArrow {
-  transform: rotate(90deg);
+  transform: rotate(0deg);
   cursor: pointer;
 }
 .moodNavigation .leftArrow {
-  transform: rotate(-90deg);
+  transform: rotate(180deg);
   cursor: pointer;
 }
 .moodNavigation img {
@@ -151,6 +158,10 @@ form button img {
   gap: 0.5rem;
   padding: 1.5rem 0;
   padding-bottom: 0;
+}
+
+.table {
+  gap: 2rem;
 }
 
 .resultPanel {
@@ -233,10 +244,14 @@ pre code {
   }
   .table .moodNavigation {
     position: absolute;
-    left: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin-top: 0.5rem;
+    width: 100%;
+    justify-content: center;
   }
   .table table {
-    margin-top: 3rem;
+    margin-top: 2.5rem;
   }
   .apiInfo {
     margin-top: 2rem;

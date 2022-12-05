@@ -2,6 +2,7 @@ import React from 'react'
 import axios from '../api/axios';
 import { useState, useRef } from 'react';
 import Arrow from '../assets/images/arrow.svg';
+import Arrow2 from '../assets/images/arrowNoCircle.svg';
 import Table from '../components/Table';
 import ResultPanelVerb from '../components/ResultPanelVerb';
 import ResultPanelRoot from '../components/ResultPanelRoot';
@@ -53,6 +54,7 @@ function FindVerb() {
 
   async function handleSubmit(e, word) {
     e.preventDefault()
+    input.current.blur()
     setTableRequested(false)
     setCurrentWord(input.current.value)
     const err = validInput(word)
@@ -133,7 +135,7 @@ function FindVerb() {
         {isLoaded && tableRequested &&
         
           <section className='table'>
-            <div className='moodNavigation'><img onClick={() => setMood('left')} className='leftArrow' src={Arrow} alt='left arrow'></img><h2>{tenses[currentMood].mood}</h2><img onClick={() => setMood('right')} className='rightArrow' src={Arrow} alt='right arrow'></img></div>
+            <div className='moodNavigation'><button onClick={() => setMood('left')} className='leftArrow'  title='previous'><img src={Arrow2} alt='left arrow'></img></button><h2>{tenses[currentMood].mood}</h2><button onClick={() => setMood('right')} className='rightArrow'  title='next'><img src={Arrow2} alt='right arrow'></img></button></div>
             <Table currentWord={currentWord} words={allWords} mood={tenses[currentMood].mood} tenses={tenses[currentMood].tenses} />
 
           </section>
