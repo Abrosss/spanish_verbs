@@ -1,23 +1,30 @@
 import React from 'react'
 
-function Table({ words, currentWord, mood, tenses}) {
+function Table({ words, currentWord, mood, tenses }) {
 
     let pronouns = ['yo', 'tú', "él/ella/usted", 'nosotros/nosotras', 'vosotros/vosotras', 'ellos/ellas/ustedes']
- 
-    
+
+
     function filter(pronoun, mood, tense) {
-        if(mood === 'Perfect') {
+        if (mood === 'Perfect') {
             mood = 'Indicative'
-        } 
-        if(mood === 'Subjunctive Perfect') {
+        }
+        if (mood === 'Subjunctive Perfect') {
             mood = 'Subjunctive'
         }
-        
+
         let pronouns = []
-        words.filter(word => word.meaning.map(el => el.performer === pronoun && el.mood === mood && el.tense === tense ? pronouns.push({ word: word.word, meaning: el }) : pronouns))
-        
-        if(pronouns.length === 0) return '-'
-        if(pronouns[0].meaning.has_long) return pronouns[0].meaning.long
+
+        words.filter(word =>
+            word.meaning.map(el =>
+                (Array.isArray(el.performer) ? el.performer.filter(pro => pro === pronoun)[0]
+                    : el.performer === pronoun)
+                    && el.mood === mood
+                    && el.tense === tense
+                    ? pronouns.push({ word: word.word, meaning: el }) : pronouns))
+
+        if (pronouns.length === 0) return '-'
+        if (pronouns[0].meaning.has_long) return pronouns[0].meaning.long
         return pronouns[0].word
     }
     // function getAllVerbs(pronoun, mood, tense) {
@@ -37,7 +44,7 @@ function Table({ words, currentWord, mood, tenses}) {
     //         return pronouns
     //     }
     // }
-console.log(filter('tú', 'Imperative', 'Imperative Affirmative'))
+
     return (
         <table>
             <tbody>
