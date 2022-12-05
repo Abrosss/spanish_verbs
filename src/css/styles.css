@@ -4,6 +4,10 @@
   padding: 0;
 }
 
+body {
+  font-family: "cooper-hewitt-bold", sans-serif;
+}
+
 nav {
   height: 4rem;
   padding: 1rem 3rem;
@@ -41,7 +45,6 @@ header {
   height: 15rem;
 }
 header h1 {
-  letter-spacing: 3px;
   font-size: 3.5rem;
 }
 
