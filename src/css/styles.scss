@@ -184,9 +184,13 @@ table {
             background-color: antiquewhite;
         }
     }
-
+    th {
+        padding-bottom: 1rem;
+        text-align: left;
+    }
     td:first-child {
         font-weight: bold;
+        padding-right: 3rem;
     }
 }
 

@@ -178,8 +178,13 @@ table th {
 table td:not(:first-child):hover {
   background-color: antiquewhite;
 }
+table th {
+  padding-bottom: 1rem;
+  text-align: left;
+}
 table td:first-child {
   font-weight: bold;
+  padding-right: 3rem;
 }
 
 .apiInfo {
