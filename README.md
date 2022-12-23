@@ -5,7 +5,11 @@ API repo can be found [here](https://github.com/Abrosss/es_conjunction_API)
 - Live Site URL: [LIVE](https://spanish-verbs.netlify.app/)
 
 ![](./spanish.png)
-
+### To do
+  - [ ] search and conjugate by typing in english words
+  - [ ] typeahead search
+  - [ ] add imperative mood in the table
+  
 ### Built with
 
 - SCSS 
