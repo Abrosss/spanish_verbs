@@ -17,8 +17,7 @@ function FindVerb() {
   const [allWords, setAllWords] = useState([])
   const [isRoot, setIsRoot] = useState(false)
   const [currentMood, setCurrentMood] = useState(0)
-
-
+  
   let tenses = [
     {
       mood: "Indicative",
@@ -53,62 +52,36 @@ function FindVerb() {
     setError(null)
   }
 
- 
-
-async function getRoot(spanishWord) {
-  const isRootOrNot = await isVerbRoot(spanishWord)
-  const response = await axios.get(`/verbs/${spanishWord.toLowerCase()}`);
-if(isRootOrNot === true) {
-setIsRoot(true)
-return spanishWord
-}
-else if(isRootOrNot === false){
-  setIsRoot(false)
-  return response.data[0].meaning[0].infinitive || response.data[0].meaning[0].verb
-}
-else {
-  const englishToSpanishRoot = await axios.get(`/roots/en/${spanishWord.toLowerCase()}`);
-  setIsRoot(true)
-  return englishToSpanishRoot.data[0].word
-}
-}
-  async function isVerbRoot(inputSpanishWord) {
-    try {
-      const response = await axios.get(`/verbs/${inputSpanishWord.toLowerCase()}`);
-      if (response.data[0].meaning[0].tense === "Infinitive") {
-        return true
-      } else {
-        return false
-      }
-    } catch (error) {
-      if (error) return "No word found. Check the spelling"
-    }
-  }
-
-
   async function handleSubmit(e, word) {
     e.preventDefault()
     input.current.blur()
     setTableRequested(false)
     setCurrentWord(input.current.value)
-  
     const err = validInput(word)
     if (err) setError(err)
-    setIsLoaded(false);
-    setLoading(true);
+    let root
     if (!err) {
-      const root = await getRoot(word)
-      const response = await axios.get(`/roots/${root}`);
-      const result = await axios.get(`/verbs/${word.toLowerCase()}`);
-      if(result.data.length === 0) {
-        const english = await axios.get(`/verbs/${root.toLowerCase()}`)
-      
-        setResult(english.data)
-      }
-      else setResult(result.data)
-      setAllWords(response.data);
-      setIsLoaded(true);
-      setLoading(false);
+      setIsLoaded(false)
+      setLoading(true)
+      await axios.get(`/verbs/${word.toLowerCase()}`).then((response) => {
+        setResult(response.data)
+        if (response.data[0].meaning[0].tense === "Infinitive") {
+          root = word
+          setIsRoot(true)
+        }
+
+        else {
+          root = response.data[0].meaning[0].infinitive || response.data[0].meaning[0].verb
+          setIsRoot(false)
+        }
+      }).catch(err => {
+        if (err) setError('No word found. Check the spelling')
+      })
+      await axios.get(`/roots/${root}`).then((response) => {
+        setAllWords(response.data)
+        setIsLoaded(true)
+        setLoading(false)
+      });
     }
 
 
@@ -152,7 +125,6 @@ else {
 
         {isLoaded && result.map((word, index) => (
           <section key={index} className='resultPanel'>
-            
             {isRoot ?
               <ResultPanelRoot word={word} tableRequested={tableRequested} setTableRequested={setTableRequested} /> :
               <ResultPanelVerb word={word} tableRequested={tableRequested} setTableRequested={setTableRequested} />}
@@ -161,9 +133,9 @@ else {
         }
 
         {isLoaded && tableRequested &&
-
+        
           <section className='table'>
-            <div className='moodNavigation'><button onClick={() => setMood('left')} className='leftArrow' title='previous'><img src={Arrow2} alt='left arrow'></img></button><h2>{tenses[currentMood].mood}</h2><button onClick={() => setMood('right')} className='rightArrow' title='next'><img src={Arrow2} alt='right arrow'></img></button></div>
+            <div className='moodNavigation'><button onClick={() => setMood('left')} className='leftArrow'  title='previous'><img src={Arrow2} alt='left arrow'></img></button><h2>{tenses[currentMood].mood}</h2><button onClick={() => setMood('right')} className='rightArrow'  title='next'><img src={Arrow2} alt='right arrow'></img></button></div>
             <Table currentWord={currentWord} words={allWords} mood={tenses[currentMood].mood} tenses={tenses[currentMood].tenses} />
 
           </section>
