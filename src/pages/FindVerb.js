@@ -55,24 +55,35 @@ function FindVerb() {
 
  
 
-async function getRoot(spanishWord) {
-  const isRootOrNot = await isVerbRoot(spanishWord)
-  const response = await axios.get(`/verbs/${spanishWord.toLowerCase()}`);
-if(isRootOrNot === true) {
-setIsRoot(true)
-return spanishWord
+async function getRoot(word) {
+  const englishRoot = await getRootFromEnglish(word) //check if the word is in english and return the es translation
+  if (englishRoot) return englishRoot
+
+  const isRootES = await isRootAlready(word) //check if the word is already a root, then just return the root
+  if (isRootES) return handleRoot(word)
+ 
+  return handleNotRoot(word) // else if not english, and not the root then return the root for the word
+
 }
-else if(isRootOrNot === false){
+async function handleRoot(spanishWord) {
+  setIsRoot(true)
+  return spanishWord
+}
+async function handleNotRoot(spanishWord) {
   setIsRoot(false)
+  const response = await axios.get(`/verbs/${spanishWord.toLowerCase()}`);
   return response.data[0].meaning[0].infinitive || response.data[0].meaning[0].verb
 }
-else {
-  const englishToSpanishRoot = await axios.get(`/roots/en/${spanishWord.toLowerCase()}`);
-  setIsRoot(true)
-  return englishToSpanishRoot.data[0].word
+async function getRootFromEnglish(englishWord) {
+  try {
+    const englishToSpanishRoot = await axios.get(`/roots/en/${englishWord.toLowerCase()}`);
+    setIsRoot(true)
+    return englishToSpanishRoot.data[0].word
+  } catch (error) {
+    return null
+  }
 }
-}
-  async function isVerbRoot(inputSpanishWord) {
+  async function isRootAlready(inputSpanishWord) {
     try {
       const response = await axios.get(`/verbs/${inputSpanishWord.toLowerCase()}`);
       if (response.data[0].meaning[0].tense === "Infinitive") {
