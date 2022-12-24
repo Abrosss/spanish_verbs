@@ -58,7 +58,7 @@ function FindVerb() {
 async function getRoot(word) {
   const englishRoot = await getRootFromEnglish(word) //check if the word is in english and return the es translation
   if (englishRoot) return englishRoot
-
+  
   const isRootES = await isRootAlready(word) //check if the word is already a root, then just return the root
   if (isRootES) return handleRoot(word)
  
