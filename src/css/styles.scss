@@ -126,6 +126,11 @@ form {
         }
     }
 }
+.note {
+    font-style: italic;
+    color: hsla(242, 27%, 24%, .8);
+    margin-top: -1rem;
+}
 .moodNavigation {
     display: flex;
     align-items: center;

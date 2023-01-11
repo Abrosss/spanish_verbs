@@ -125,6 +125,12 @@ form button img {
   transform: rotate(90deg);
 }
 
+.note {
+  font-style: italic;
+  color: hsla(242deg, 27%, 24%, 0.8);
+  margin-top: -1rem;
+}
+
 .moodNavigation {
   display: flex;
   align-items: center;
@@ -203,7 +209,7 @@ table td:first-child {
 pre {
   margin-top: 2rem;
   background-color: #2d2c4c;
-  padding: 1rem;
+  padding: 1.1rem;
 }
 pre code {
   color: #f0f0f0;

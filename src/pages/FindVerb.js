@@ -53,7 +53,7 @@ function FindVerb() {
     setError(null)
   }
 
- 
+ //if no en word found, check for ANY similarities and give a suggestion
 
 async function getRoot(word) {
   const englishRoot = await getRootFromEnglish(word) //check if the word is in english and return the es translation
@@ -146,6 +146,7 @@ async function getRootFromEnglish(englishWord) {
           <input autoFocus='on' ref={input} autoComplete='off' onChange={inputChange} placeholder='Conjugate' name='word'></input>
           <button onClick={(e) => handleSubmit(e, input.current.value)}><img src={Arrow} alt='arrow icon'></img></button>
         </form>
+        <span className='note'>type a word in Spanish or English</span>
       </header>
 
       <main>
