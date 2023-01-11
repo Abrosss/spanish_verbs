@@ -118,7 +118,8 @@ async function getRootFromEnglish(englishWord) {
     // if (err) setError(err)
     // setIsLoaded(false);
     // setLoading(true);
-
+    setIsLoaded(false);
+    setLoading(true);
       const root = await getRoot(validEnVerb(word))
       const response = await axios.get(`/roots/${root}`);
       const result = await axios.get(`/verbs/${word.toLowerCase()}`);
