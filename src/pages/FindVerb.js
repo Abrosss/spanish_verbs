@@ -39,15 +39,15 @@ function FindVerb() {
   ]
   const input = useRef()
 
-  function validInput(string) {
-    let err = 'delete spaces or try again'
-    let array = string.split(' ')
-    if (array.length > 1) {
+  // function validInput(string) {
+  //   let err = 'delete spaces or try again'
+  //   let array = string.split(' ')
+  //   if (array.length > 1) {
 
-      return err
-    }
-    else return
-  }
+  //     return err
+  //   }
+  //   else return
+  // }
   function inputChange(e) {
 
     setError(null)
@@ -95,21 +95,31 @@ async function getRootFromEnglish(englishWord) {
       if (error) return "No word found. Check the spelling"
     }
   }
-
+  function validEnVerb(string) {
+    let wordBreak = string.split(' ');
+  
+    // Check if the first word is 'to'
+    if (wordBreak[0].toLowerCase() === "to") {
+      // If so, remove it and join the remaining words back together
+      wordBreak.shift();
+      return wordBreak.join(' ');
+    } else {
+      // If not, return the original string
+      return string;
+    }
+  }
 
   async function handleSubmit(e, word) {
     e.preventDefault()
     input.current.blur()
     setTableRequested(false)
     setCurrentWord(input.current.value)
-  
-    const err = validInput(word)
-    if (err) setError(err)
-    setIsLoaded(false);
-    setLoading(true);
-    
-    if (!err) {
-      const root = await getRoot(word)
+    // const err = validInput(word)
+    // if (err) setError(err)
+    // setIsLoaded(false);
+    // setLoading(true);
+
+      const root = await getRoot(validEnVerb(word))
       const response = await axios.get(`/roots/${root}`);
       const result = await axios.get(`/verbs/${word.toLowerCase()}`);
       if(result.data.length === 0) {
@@ -127,7 +137,7 @@ async function getRootFromEnglish(englishWord) {
     }
 
 
-  }
+  
 
   function setMood(direction) {
     let lastIndex = tenses.length - 1
