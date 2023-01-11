@@ -107,14 +107,18 @@ async function getRootFromEnglish(englishWord) {
     if (err) setError(err)
     setIsLoaded(false);
     setLoading(true);
+    
     if (!err) {
       const root = await getRoot(word)
       const response = await axios.get(`/roots/${root}`);
       const result = await axios.get(`/verbs/${word.toLowerCase()}`);
       if(result.data.length === 0) {
         const english = await axios.get(`/verbs/${root.toLowerCase()}`)
-      
-        setResult(english.data)
+        if(english.data.length === 0) {
+          setError("No word found. Check the spelling")
+          setResult([])
+        } 
+        else setResult(english.data)
       }
       else setResult(result.data)
       setAllWords(response.data);
