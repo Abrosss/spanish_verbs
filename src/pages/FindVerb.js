@@ -39,21 +39,13 @@ function FindVerb() {
   ]
   const input = useRef()
 
-  // function validInput(string) {
-  //   let err = 'delete spaces or try again'
-  //   let array = string.split(' ')
-  //   if (array.length > 1) {
 
-  //     return err
-  //   }
-  //   else return
-  // }
   function inputChange(e) {
 
     setError(null)
   }
 
- //if no en word found, check for ANY similarities and give a suggestion
+
 
 async function getRoot(word) {
   const englishRoot = await getRootFromEnglish(word) //check if the word is in english and return the es translation
@@ -114,14 +106,10 @@ async function getRootFromEnglish(englishWord) {
     input.current.blur()
     setTableRequested(false)
     setCurrentWord(input.current.value)
-    // const err = validInput(word)
-    // if (err) setError(err)
-    // setIsLoaded(false);
-    // setLoading(true);
     setIsLoaded(false);
     setLoading(true);
       const root = await getRoot(validEnVerb(word))
-      const response = await axios.get(`/roots/${root}`);
+      const allVerbsForTable = await axios.get(`/roots/${root}`);
       const result = await axios.get(`/verbs/${word.toLowerCase()}`);
       if(result.data.length === 0) {
         const english = await axios.get(`/verbs/${root.toLowerCase()}`)
@@ -132,7 +120,8 @@ async function getRootFromEnglish(englishWord) {
         else setResult(english.data)
       }
       else setResult(result.data)
-      setAllWords(response.data);
+      console.log(root, allVerbsForTable, result)
+      setAllWords(allVerbsForTable.data);
       setIsLoaded(true);
       setLoading(false);
     }
@@ -203,3 +192,5 @@ async function getRootFromEnglish(englishWord) {
 }
 
 export default FindVerb
+
+ //if no en word found, check for ANY similarities and give a suggestion
