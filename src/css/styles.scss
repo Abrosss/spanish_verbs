@@ -57,35 +57,6 @@ main {
     justify-content: center;
 }
 
-.pronoun {
-    font-size: 2.5rem;
-    font-weight: bold;
-}
-
-.italic {
-    font-style: italic;
-}
-
-.bold {
-    font-weight: bold;
-}
-
-.dotted {
-    border-bottom: 1px dotted #000;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-.selected {
-    background-color: #f0f0f0;
-    padding: 0 .5rem;
-}
-.colored {
-    color: rgb(32, 56, 48);
-}
-.underline {
-    border-bottom: 1px #000 solid;
-}
 form {
     display: flex;
     width: 50%;
@@ -171,7 +142,35 @@ form {
 .resultPanel {
     text-align: center;
 }
+.pronoun {
+    font-size: 2.5rem;
+    font-weight: bold;
+}
 
+.italic {
+    font-style: italic;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.dotted {
+    border-bottom: 1px dotted #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.selected {
+    background-color: #f0f0f0;
+    padding: 0 .5rem;
+}
+.colored {
+    color: rgb(32, 56, 48);
+}
+.underline {
+    border-bottom: 1px #000 solid;
+}
 table {
     tr:first-child {
         border-bottom: 1px black solid;
@@ -222,6 +221,7 @@ pre {
 .exampleRequest {
     color:#6c63ff
 }
+
 @media only screen and (max-width: 800px) {
     nav {
         flex-direction: column;
