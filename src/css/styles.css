@@ -55,44 +55,29 @@ main {
   justify-content: center;
 }
 
-.pronoun {
-  font-size: 2.5rem;
-  font-weight: bold;
-}
-
-.italic {
-  font-style: italic;
-}
-
-.bold {
-  font-weight: bold;
-}
-
-.dotted {
-  border-bottom: 1px dotted #000;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.selected {
-  background-color: #f0f0f0;
-  padding: 0 0.5rem;
-}
-
-.colored {
-  color: rgb(32, 56, 48);
-}
-
-.underline {
-  border-bottom: 1px #000 solid;
-}
-
 form {
   display: flex;
   width: 50%;
   justify-content: center;
   align-items: center;
   position: relative;
+}
+form .suggestions {
+  position: absolute;
+  top: 3.5rem;
+  width: 100%;
+  height: 20rem;
+  background-color: white;
+}
+form .suggestions li {
+  list-style-type: none;
+  padding: 0.5rem 1rem;
+}
+form .suggestions li:hover {
+  background-color: #f0f0f0;
+}
+form .suggestions.hidden {
+  display: none;
 }
 form input {
   width: 100%;
@@ -106,6 +91,9 @@ form input {
 form input:focus {
   outline: none;
   border: none;
+}
+form .clearButton {
+  right: 4rem;
 }
 form button {
   position: absolute;
@@ -172,6 +160,38 @@ form button img {
 
 .resultPanel {
   text-align: center;
+}
+
+.pronoun {
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+.italic {
+  font-style: italic;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.dotted {
+  border-bottom: 1px dotted #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.selected {
+  background-color: #f0f0f0;
+  padding: 0 0.5rem;
+}
+
+.colored {
+  color: rgb(32, 56, 48);
+}
+
+.underline {
+  border-bottom: 1px #000 solid;
 }
 
 table tr:first-child {

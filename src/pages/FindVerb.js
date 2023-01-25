@@ -3,6 +3,7 @@ import axios from '../api/axios';
 import { useState, useRef } from 'react';
 import Arrow from '../assets/images/arrow.svg';
 import Arrow2 from '../assets/images/arrowNoCircle.svg';
+import Clear from '../assets/images/cancel.svg';
 import Table from '../components/Table';
 import ResultPanelVerb from '../components/ResultPanelVerb';
 import ResultPanelRoot from '../components/ResultPanelRoot';
@@ -17,7 +18,7 @@ function FindVerb() {
   const [allWords, setAllWords] = useState([])
   const [isRoot, setIsRoot] = useState(false)
   const [currentMood, setCurrentMood] = useState(0)
-
+  const [suggestions, setSuggestions] = useState([])
 
   let tenses = [
     {
@@ -38,10 +39,21 @@ function FindVerb() {
     }
   ]
   const input = useRef()
+  function handleKeyPress(event) {
+    if (event.keyCode === 13) {
+      handleSubmit(event, input.current.value)
+    }
+  }
 
-
-  function inputChange(e) {
-
+  async function inputChange(request) {
+    console.log(request)
+    if(!request || input.current.value === '') {
+      setSuggestions([])
+      return
+    }
+      const response = await axios.get(`/searchVerbs/${request.toLowerCase()}`)
+      setSuggestions(response.data)
+    
     setError(null)
   }
 
@@ -104,6 +116,7 @@ async function getRootFromEnglish(englishWord) {
   async function handleSubmit(e, word) {
     e.preventDefault()
     input.current.blur()
+    setSuggestions([])
     setTableRequested(false)
     setCurrentWord(input.current.value)
     setIsLoaded(false);
@@ -126,7 +139,12 @@ async function getRootFromEnglish(englishWord) {
       setLoading(false);
     }
 
-
+function clearInput(e){
+  e.preventDefault()
+  input.current.value = ''
+  input.current.focus()
+  setSuggestions([])
+}
   
 
   function setMood(direction) {
@@ -147,9 +165,16 @@ async function getRootFromEnglish(englishWord) {
       <header>
         <h1>Spanish Verbs</h1>
         <form>
-          <input autoFocus='on' ref={input} autoComplete='off' onChange={inputChange} placeholder='Conjugate' name='word'></input>
+          <input autoFocus='on' ref={input} autoComplete='off' onKeyDown={(e) => handleKeyPress(e)} onChange={(e) => inputChange(e.target.value)} placeholder='Conjugate' name='word'></input>
+          <button className='clearButton' onClick={(e) => clearInput(e)}><img src={Clear} alt='clear icon'></img></button>
           <button onClick={(e) => handleSubmit(e, input.current.value)}><img src={Arrow} alt='arrow icon'></img></button>
+          <ul className={suggestions.length===0 ? 'suggestions hidden' : ' suggestions'}>
+            {suggestions.map(suggestion => (
+              <li onClick={(e) => handleSubmit(e, suggestion.word)} className='suggestion'>{suggestion.word}</li>
+            ))}
+          </ul>
         </form>
+        
         <span className='note'>type a word in Spanish or English</span>
       </header>
 
