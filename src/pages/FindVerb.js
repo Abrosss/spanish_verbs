@@ -39,11 +39,7 @@ function FindVerb() {
     }
   ]
   const input = useRef()
-  function handleKeyPress(event) {
-    if (event.keyCode === 13) {
-      handleSubmit(event, input.current.value)
-    }
-  }
+
 
   async function inputChange(request) {
     console.log(request)
@@ -165,12 +161,13 @@ function clearInput(e){
       <header>
         <h1>Spanish Verbs</h1>
         <form>
-          <input autoFocus='on' ref={input} autoComplete='off' onKeyDown={(e) => handleKeyPress(e)} onChange={(e) => inputChange(e.target.value)} placeholder='Conjugate' name='word'></input>
-          <button className='clearButton' onClick={(e) => clearInput(e)}><img src={Clear} alt='clear icon'></img></button>
+          <input autoFocus='on' ref={input} autoComplete='off' onChange={(e) => inputChange(e.target.value)} placeholder='Conjugate' name='word'></input>
           <button onClick={(e) => handleSubmit(e, input.current.value)}><img src={Arrow} alt='arrow icon'></img></button>
+          <button className='clearButton' onClick={(e) => clearInput(e)}><img src={Clear} alt='clear icon'></img></button>
+          
           <ul className={suggestions.length===0 ? 'suggestions hidden' : ' suggestions'}>
             {suggestions.map(suggestion => (
-              <li onClick={(e) => handleSubmit(e, suggestion.word)} className='suggestion'>{suggestion.word}</li>
+              <li onClick={(e) => handleSubmit(e, suggestion.word)} className='suggestion'>{suggestion.word} {suggestion.translation && '('+suggestion.translation[0]+')'}</li>
             ))}
           </ul>
         </form>

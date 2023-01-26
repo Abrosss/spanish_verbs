@@ -68,6 +68,7 @@ form .suggestions {
   width: 100%;
   height: 20rem;
   background-color: white;
+  z-index: 5;
 }
 form .suggestions li {
   list-style-type: none;
