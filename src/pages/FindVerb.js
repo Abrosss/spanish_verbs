@@ -19,7 +19,7 @@ function FindVerb() {
   const [isRoot, setIsRoot] = useState(false)
   const [currentMood, setCurrentMood] = useState(0)
   const [suggestions, setSuggestions] = useState([])
-
+  const [selectedIndex, setSelectedIndex] = useState(0);
   let tenses = [
     {
       mood: "Indicative",
@@ -142,7 +142,17 @@ function clearInput(e){
   setSuggestions([])
 }
   
+const handleKeyPress = (event) => {
 
+  if (event.key === 'ArrowUp') {
+    setSelectedIndex(Math.max(0, selectedIndex - 1))
+    input.current.value=suggestions[selectedIndex - 1].word
+  } else if (event.key === 'ArrowDown') {
+    setSelectedIndex(Math.min(suggestions.length - 1, selectedIndex + 1))
+    input.current.value=suggestions[selectedIndex + 1].word
+  }
+  
+};
   function setMood(direction) {
     let lastIndex = tenses.length - 1
     if (direction === 'left') {
@@ -160,14 +170,14 @@ function clearInput(e){
 
       <header>
         <h1>Spanish Verbs</h1>
-        <form>
-          <input autoFocus='on' ref={input} autoComplete='off' onChange={(e) => inputChange(e.target.value)} placeholder='Conjugate' name='word'></input>
+        <form tabIndex={-1} onKeyDown={handleKeyPress} >
+          <input autoFocus='on' ref={input} autoComplete='off' onChange={(e) => inputChange(e.target.value)} placeholder='Conjugate' name='word' ></input>
           <button onClick={(e) => handleSubmit(e, input.current.value)}><img src={Arrow} alt='arrow icon'></img></button>
-          <button className='clearButton' onClick={(e) => clearInput(e)}><img src={Clear} alt='clear icon'></img></button>
+          <button className={suggestions.length === 0 ? "clearButton hide" : "clearButton"} onClick={(e) => clearInput(e)}><img src={Clear} alt='clear icon'></img></button>
           
           <ul className={suggestions.length===0 ? 'suggestions hidden' : ' suggestions'}>
-            {suggestions.map(suggestion => (
-              <li onClick={(e) => handleSubmit(e, suggestion.word)} className='suggestion'>{suggestion.word} {suggestion.translation && '('+suggestion.translation[0]+')'}</li>
+            {suggestions.map((suggestion,index) => (
+              <li onClick={(e) => handleSubmit(e, suggestion.word)} key={index} className={index === selectedIndex ? 'selected suggestion' : 'suggestion'}>{suggestion.word} {suggestion.translation && '('+suggestion.translation[0]+')'}</li>
             ))}
           </ul>
         </form>

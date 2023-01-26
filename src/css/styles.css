@@ -55,6 +55,10 @@ main {
   justify-content: center;
 }
 
+.selected {
+  background-color: #2d2c4c;
+}
+
 form {
   display: flex;
   width: 50%;
@@ -69,12 +73,23 @@ form .suggestions {
   height: 20rem;
   background-color: white;
   z-index: 5;
+  outline: none;
+  border: none;
+  border-radius: 0 0 15px 15px;
+}
+form .suggestions:focus {
+  outline: none;
+  border: 0px;
+  box-shadow: none;
 }
 form .suggestions li {
   list-style-type: none;
-  padding: 0.5rem 1rem;
+  padding: 0.8rem 1rem;
 }
 form .suggestions li:hover {
+  background-color: #f0f0f0;
+}
+form .suggestions li:focus {
   background-color: #f0f0f0;
 }
 form .suggestions.hidden {
@@ -84,7 +99,7 @@ form input {
   width: 100%;
   padding: 1rem 0;
   padding-left: 1rem;
-  border-radius: 15px;
+  border-radius: 15px 15px 0 0;
   border: none;
   font-size: 1.3rem;
   box-shadow: 0 0 50px rgba(0, 0, 0, 0.16);
@@ -95,6 +110,9 @@ form input:focus {
 }
 form .clearButton {
   right: 4rem;
+}
+form .clearButton.hide {
+  display: none;
 }
 form button {
   position: absolute;
