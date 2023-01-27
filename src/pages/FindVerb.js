@@ -3,6 +3,7 @@ import axios from '../api/axios';
 import { useState, useRef } from 'react';
 import Arrow from '../assets/images/arrow.svg';
 import Arrow2 from '../assets/images/arrowNoCircle.svg';
+import Clear from '../assets/images/cancel.svg';
 import Table from '../components/Table';
 import ResultPanelVerb from '../components/ResultPanelVerb';
 import ResultPanelRoot from '../components/ResultPanelRoot';
@@ -17,8 +18,8 @@ function FindVerb() {
   const [allWords, setAllWords] = useState([])
   const [isRoot, setIsRoot] = useState(false)
   const [currentMood, setCurrentMood] = useState(0)
-
-
+  const [suggestions, setSuggestions] = useState([])
+  const [selectedIndex, setSelectedIndex] = useState(0);
   let tenses = [
     {
       mood: "Indicative",
@@ -40,8 +41,16 @@ function FindVerb() {
   const input = useRef()
 
 
-  function inputChange(e) {
-
+  async function inputChange(request) {
+    console.log(suggestions)
+    if(!request || input.current.value === '') {
+      setSuggestions([])
+      return
+    }
+      const response = await axios.get(`/searchVerbs/${request.toLowerCase()}`)
+      setSuggestions(response.data)
+      console.log(suggestions)
+    
     setError(null)
   }
 
@@ -104,6 +113,7 @@ async function getRootFromEnglish(englishWord) {
   async function handleSubmit(e, word) {
     e.preventDefault()
     input.current.blur()
+    setSuggestions([])
     setTableRequested(false)
     setCurrentWord(input.current.value)
     setIsLoaded(false);
@@ -126,9 +136,24 @@ async function getRootFromEnglish(englishWord) {
       setLoading(false);
     }
 
-
+function clearInput(e){
+  e.preventDefault()
+  input.current.value = ''
+  input.current.focus()
+  setSuggestions([])
+}
   
+const handleKeyPress = (event) => {
 
+  if (event.key === 'ArrowUp') {
+    setSelectedIndex(Math.max(0, selectedIndex - 1))
+    input.current.value=suggestions[selectedIndex - 1].word
+  } else if (event.key === 'ArrowDown') {
+    setSelectedIndex(Math.min(suggestions.length - 1, selectedIndex + 1))
+    input.current.value=suggestions[selectedIndex + 1].word
+  }
+  
+};
   function setMood(direction) {
     let lastIndex = tenses.length - 1
     if (direction === 'left') {
@@ -146,10 +171,18 @@ async function getRootFromEnglish(englishWord) {
 
       <header>
         <h1>Spanish Verbs</h1>
-        <form>
-          <input autoFocus='on' ref={input} autoComplete='off' onChange={inputChange} placeholder='Conjugate' name='word'></input>
+        <form tabIndex={-1} onKeyDown={handleKeyPress} >
+          <input autoFocus='on' spellcheck="false" className={suggestions.length > 0 ? 'suggestionsOn' : ''} ref={input} autoComplete='off' onChange={(e) => inputChange(e.target.value)} placeholder='Conjugate' name='word' ></input>
           <button onClick={(e) => handleSubmit(e, input.current.value)}><img src={Arrow} alt='arrow icon'></img></button>
+          <button className={suggestions.length === 0 ? "clearButton hide" : "clearButton"} onClick={(e) => clearInput(e)}><img src={Clear} alt='clear icon'></img></button>
+          
+          <ul className={suggestions.length===0 ? 'suggestions hidden' : ' suggestions'}>
+            {suggestions.map((suggestion,index) => (
+              <li onClick={(e) => handleSubmit(e, suggestion.word)} key={index} className={index === selectedIndex ? 'selected suggestion' : 'suggestion'}>{suggestion.word} {suggestion.translation && '('+suggestion.translation[0]+')'}</li>
+            ))}
+          </ul>
         </form>
+        
         <span className='note'>type a word in Spanish or English</span>
       </header>
 
