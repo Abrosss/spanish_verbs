@@ -85,6 +85,7 @@ form .suggestions:focus {
 form .suggestions li {
   list-style-type: none;
   padding: 0.8rem 1rem;
+  cursor: pointer;
 }
 form .suggestions li:hover {
   background-color: #f0f0f0;
@@ -99,7 +100,7 @@ form input {
   width: 100%;
   padding: 1rem 0;
   padding-left: 1rem;
-  border-radius: 15px 15px 0 0;
+  border-radius: 15px;
   border: none;
   font-size: 1.3rem;
   box-shadow: 0 0 50px rgba(0, 0, 0, 0.16);
@@ -108,8 +109,15 @@ form input:focus {
   outline: none;
   border: none;
 }
+form input.suggestionsOn {
+  border-radius: 15px 15px 0 0;
+}
 form .clearButton {
   right: 4rem;
+  opacity: 0.3;
+}
+form .clearButton:hover {
+  opacity: 0.8;
 }
 form .clearButton.hide {
   display: none;

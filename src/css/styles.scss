@@ -83,6 +83,7 @@ form {
         li {
             list-style-type: none;
             padding: .8rem 1rem;
+            cursor: pointer;
             &:hover {
                 background-color: #f0f0f0;
             }
@@ -98,7 +99,7 @@ form {
         width: 100%;
         padding: 1rem 0;
         padding-left: 1rem;
-        border-radius: 15px 15px 0 0;
+        border-radius: 15px;
         border: none;
         font-size: 1.3rem;
         box-shadow: 0 0 50px rgba(0, 0, 0, 0.16);
@@ -108,8 +109,15 @@ form {
             border: none;
         }
     }
+    input.suggestionsOn{
+        border-radius: 15px 15px 0 0;
+    }
     .clearButton {
-        right: 4rem
+        right: 4rem;
+        opacity:.3;
+        &:hover {
+            opacity: .8;
+        }
     }
     .clearButton.hide {
         display: none;

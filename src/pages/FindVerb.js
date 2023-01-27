@@ -42,13 +42,14 @@ function FindVerb() {
 
 
   async function inputChange(request) {
-    console.log(request)
+    console.log(suggestions)
     if(!request || input.current.value === '') {
       setSuggestions([])
       return
     }
       const response = await axios.get(`/searchVerbs/${request.toLowerCase()}`)
       setSuggestions(response.data)
+      console.log(suggestions)
     
     setError(null)
   }
@@ -171,7 +172,7 @@ const handleKeyPress = (event) => {
       <header>
         <h1>Spanish Verbs</h1>
         <form tabIndex={-1} onKeyDown={handleKeyPress} >
-          <input autoFocus='on' ref={input} autoComplete='off' onChange={(e) => inputChange(e.target.value)} placeholder='Conjugate' name='word' ></input>
+          <input autoFocus='on' spellcheck="false" className={suggestions.length > 0 ? 'suggestionsOn' : ''} ref={input} autoComplete='off' onChange={(e) => inputChange(e.target.value)} placeholder='Conjugate' name='word' ></input>
           <button onClick={(e) => handleSubmit(e, input.current.value)}><img src={Arrow} alt='arrow icon'></img></button>
           <button className={suggestions.length === 0 ? "clearButton hide" : "clearButton"} onClick={(e) => clearInput(e)}><img src={Clear} alt='clear icon'></img></button>
           
