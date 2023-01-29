@@ -42,14 +42,12 @@ function FindVerb() {
 
 
   async function inputChange(request) {
-    console.log(suggestions)
     if(!request || input.current.value === '') {
       setSuggestions([])
       return
     }
       const response = await axios.get(`/searchVerbs/${request.toLowerCase()}`)
       setSuggestions(response.data)
-      console.log(suggestions)
     
     setError(null)
   }
@@ -130,7 +128,7 @@ async function getRootFromEnglish(englishWord) {
         else setResult(english.data)
       }
       else setResult(result.data)
-      console.log(root, allVerbsForTable, result)
+  
       setAllWords(allVerbsForTable.data);
       setIsLoaded(true);
       setLoading(false);
