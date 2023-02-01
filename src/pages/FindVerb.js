@@ -7,6 +7,7 @@ import Clear from '../assets/images/cancel.svg';
 import Table from '../components/Table';
 import ResultPanelVerb from '../components/ResultPanelVerb';
 import ResultPanelRoot from '../components/ResultPanelRoot';
+import { useEffect } from 'react';
 
 function FindVerb() {
   const [result, setResult] = useState([])
@@ -52,7 +53,12 @@ function FindVerb() {
     setError(null)
   }
 
-
+  useEffect(() => {
+    async function fetchData() {
+      const response = await axios.get('/verbs/pinta')
+    }
+    fetchData();
+  }, []);
 
 async function getRoot(word) {
   const englishRoot = await getRootFromEnglish(word) //check if the word is in english and return the es translation
@@ -147,12 +153,13 @@ const handleKeyPress = (event) => {
     console.log(selectedIndex)
     event.preventDefault()
     setSelectedIndex(Math.max(0, selectedIndex - 1))
-    input.current.value=suggestions[selectedIndex - 1].word
+    input.current.value=suggestions[selectedIndex === 0 ? selectedIndex : selectedIndex - 1].word
   } else if (event.key === 'ArrowDown' && selectedIndex<=suggestions.length -1) {
     console.log(selectedIndex)
     setSelectedIndex(Math.min(suggestions.length - 1, selectedIndex + 1))
-    input.current.value=suggestions[selectedIndex + 1].word
+    input.current.value=suggestions[selectedIndex === suggestions.length - 1  ? selectedIndex : selectedIndex + 1].word
   }
+  
   
 };
   function setMood(direction) {
