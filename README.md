@@ -7,7 +7,7 @@ API repo can be found [here](https://github.com/Abrosss/es_conjunction_API)
 ![](./spanish.png)
 ### To do
   - [x] search and conjugate by typing in english words
-  - [ ] typeahead search
+  - [x] typeahead search with keyboard navigation
   - [ ] add imperative mood in the table
   
 ### Built with
