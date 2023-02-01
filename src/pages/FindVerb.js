@@ -172,17 +172,19 @@ const handleKeyPress = (event) => {
 
       <header>
         <h1>Spanish Verbs</h1>
+        <section className='searchBar'>
         <form tabIndex={-1} onKeyDown={handleKeyPress} >
           <input autoFocus='on' spellcheck="false" className={suggestions.length > 0 ? 'suggestionsOn' : ''} ref={input} autoComplete='off' onChange={(e) => inputChange(e.target.value)} placeholder='Conjugate' name='word' ></input>
           <button onClick={(e) => handleSubmit(e, input.current.value)}><img src={Arrow} alt='arrow icon'></img></button>
           <button className={suggestions.length === 0 ? "clearButton hide" : "clearButton"} onClick={(e) => clearInput(e)}><img src={Clear} alt='clear icon'></img></button>
-          
-          <ul className={suggestions.length===0 ? 'suggestions hidden' : ' suggestions'}>
+        </form>
+        <ul className={suggestions.length===0 ? 'suggestions hidden' : ' suggestions'}>
             {suggestions.map((suggestion,index) => (
               <li onClick={(e) => handleSubmit(e, suggestion.word)} key={index} className={index === selectedIndex ? 'selected suggestion' : 'suggestion'}>{suggestion.word} {suggestion.translation && '('+suggestion.translation[0]+')'}</li>
             ))}
           </ul>
-        </form>
+        </section>
+        
         
         <span className='note'>type a word in Spanish or English</span>
       </header>
