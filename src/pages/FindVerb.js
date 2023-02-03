@@ -148,9 +148,7 @@ function clearInput(e){
 }
   
 const handleKeyPress = (event) => {
-  console.log(selectedIndex)
   if (event.key === 'ArrowUp' && selectedIndex>=0) {
-   
     event.preventDefault()
     setSelectedIndex(Math.max(0, selectedIndex - 1))
     input.current.value=suggestions[selectedIndex === 0 ? selectedIndex : selectedIndex - 1].word
