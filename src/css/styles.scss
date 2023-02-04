@@ -30,7 +30,6 @@ nav {
     }
 
 }
-
 header {
     display: flex;
     flex-direction: column;
@@ -49,23 +48,11 @@ header {
         font-size: 3.5rem;
     }
 }
-
 main {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-}
-.selected {
-    background-color: #2d2c4c;
-}
-.searchBar {
-    display: flex;
-    width: 50%;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    height: 5rem;
 }
 form {
     display: flex;
@@ -154,6 +141,17 @@ form {
     color: hsla(242, 27%, 24%, .8);
     margin-top: -1rem;
 }
+.selected {
+    background-color: #2d2c4c;
+}
+.searchBar {
+    display: flex;
+    width: 50%;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    height: 5rem;
+}
 .moodNavigation {
     display: flex;
     align-items: center;
@@ -177,51 +175,6 @@ form {
         width: 1.5rem;
         height: 1.5rem;
     }
-}
-.table,
-.resultPanel {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: .5rem;
-    padding: 1.5rem 0;
-    padding-bottom: 0;
-   
-}
-.table {
-    gap: 2rem;
-}
-.resultPanel {
-    text-align: center;
-}
-.pronoun {
-    font-size: 2.5rem;
-    font-weight: bold;
-}
-
-.italic {
-    font-style: italic;
-}
-
-.bold {
-    font-weight: bold;
-}
-
-.dotted {
-    border-bottom: 1px dotted #000;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-.selected {
-    background-color: #f0f0f0;
-    padding: 0 .5rem;
-}
-.colored {
-    color: rgb(32, 56, 48);
-}
-.underline {
-    border-bottom: 1px #000 solid;
 }
 table {
     tr:first-child {
@@ -249,7 +202,47 @@ table {
         padding-right: 3rem;
     }
 }
-
+.table,
+.resultPanel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .5rem;
+    padding: 1.5rem 0;
+    padding-bottom: 0;
+   
+}
+.table {
+    gap: 2rem;
+}
+.resultPanel {
+    text-align: center;
+}
+.pronoun {
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+.italic {
+    font-style: italic;
+}
+.bold {
+    font-weight: bold;
+}
+.dotted {
+    border-bottom: 1px dotted #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+.selected {
+    background-color: #f0f0f0;
+    padding: 0 .5rem;
+}
+.colored {
+    color: rgb(32, 56, 48);
+}
+.underline {
+    border-bottom: 1px #000 solid;
+}
 .apiInfo {
     background-color: #f0f0f0;
     margin-top: 5rem;
