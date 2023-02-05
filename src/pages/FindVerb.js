@@ -153,7 +153,6 @@ const handleKeyPress = (event) => {
     setSelectedIndex(Math.max(0, selectedIndex - 1))
     input.current.value=suggestions[selectedIndex === 0 ? selectedIndex : selectedIndex - 1].word
   } else if (event.key === 'ArrowDown' && selectedIndex<=suggestions.length -1) {
-    console.log(selectedIndex)
     setSelectedIndex(Math.min(suggestions.length - 1, selectedIndex + 1))
     input.current.value=suggestions[selectedIndex === suggestions.length - 1  ? selectedIndex : selectedIndex + 1].word
   }
