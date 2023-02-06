@@ -20,7 +20,8 @@ function FindVerb() {
   const [isRoot, setIsRoot] = useState(false)
   const [currentMood, setCurrentMood] = useState(0)
   const [suggestions, setSuggestions] = useState([])
-  const [selectedIndex, setSelectedIndex] = useState(-1);
+  const [selectedIndex, setSelectedIndex] = useState(-1)
+  
   let tenses = [
     {
       mood: "Indicative",
@@ -150,10 +151,10 @@ function clearInput(e){
 const handleKeyPress = (event) => {
   if (event.key === 'ArrowUp' && selectedIndex>=0) {
     event.preventDefault()
-    setSelectedIndex(Math.max(0, selectedIndex - 1))
+    setSelectedIndex(prev => Math.max(0, prev - 1))
     input.current.value=suggestions[selectedIndex === 0 ? selectedIndex : selectedIndex - 1].word
   } else if (event.key === 'ArrowDown' && selectedIndex<=suggestions.length -1) {
-    setSelectedIndex(Math.min(suggestions.length - 1, selectedIndex + 1))
+    setSelectedIndex(prev => Math.min(suggestions.length - 1, prev + 1))
     input.current.value=suggestions[selectedIndex === suggestions.length - 1  ? selectedIndex : selectedIndex + 1].word
   }
   
