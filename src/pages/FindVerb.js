@@ -149,11 +149,11 @@ function clearInput(e){
 }
   
 const handleKeyPress = (event) => {
-  if (event.key === 'ArrowUp' && selectedIndex>=0) {
+  if (event.key === 'ArrowUp') {
     event.preventDefault()
     setSelectedIndex(prev => Math.max(0, prev - 1))
     input.current.value=suggestions[selectedIndex === 0 ? selectedIndex : selectedIndex - 1].word
-  } else if (event.key === 'ArrowDown' && selectedIndex<=suggestions.length -1) {
+  } else if (event.key === 'ArrowDown') {
     setSelectedIndex(prev => Math.min(suggestions.length - 1, prev + 1))
     input.current.value=suggestions[selectedIndex === suggestions.length - 1  ? selectedIndex : selectedIndex + 1].word
   }
