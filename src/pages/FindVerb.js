@@ -21,7 +21,7 @@ function FindVerb() {
   const [currentMood, setCurrentMood] = useState(0)
   const [suggestions, setSuggestions] = useState([])
   const [selectedIndex, setSelectedIndex] = useState(-1)
-  
+
   let tenses = [
     {
       mood: "Indicative",
@@ -44,13 +44,13 @@ function FindVerb() {
 
 
   async function inputChange(request) {
-    if(!request || input.current.value === '') {
+    if (!request || input.current.value === '') {
       setSuggestions([])
       return
     }
-      const response = await axios.get(`/searchVerbs/${request.toLowerCase()}`)
-      setSuggestions(response.data)
-    
+    const response = await axios.get(`/searchVerbs/${request.toLowerCase()}`)
+    setSuggestions(response.data)
+
     setError(null)
   }
 
@@ -61,34 +61,34 @@ function FindVerb() {
     fetchData();
   }, []);
 
-async function getRoot(word) {
-  const englishRoot = await getRootFromEnglish(word) //check if the word is in english and return the es translation
-  if (englishRoot) return englishRoot
-  
-  const isRootES = await isRootAlready(word) //check if the word is already a root, then just return the root
-  if (isRootES) return handleRoot(word)
- 
-  return handleNotRoot(word) // else if not english, and not the root then return the root for the word
+  async function getRoot(word) {
+    const englishRoot = await getRootFromEnglish(word) //check if the word is in english and return the es translation
+    if (englishRoot) return englishRoot
 
-}
-async function handleRoot(spanishWord) {
-  setIsRoot(true)
-  return spanishWord
-}
-async function handleNotRoot(spanishWord) {
-  setIsRoot(false)
-  const response = await axios.get(`/verbs/${spanishWord.toLowerCase()}`);
-  return response.data[0].meaning[0].infinitive || response.data[0].meaning[0].verb
-}
-async function getRootFromEnglish(englishWord) {
-  try {
-    const englishToSpanishRoot = await axios.get(`/roots/en/${englishWord.toLowerCase()}`);
-    setIsRoot(true)
-    return englishToSpanishRoot.data[0].word
-  } catch (error) {
-    return null
+    const isRootES = await isRootAlready(word) //check if the word is already a root, then just return the root
+    if (isRootES) return handleRoot(word)
+
+    return handleNotRoot(word) // else if not english, and not the root then return the root for the word
+
   }
-}
+  async function handleRoot(spanishWord) {
+    setIsRoot(true)
+    return spanishWord
+  }
+  async function handleNotRoot(spanishWord) {
+    setIsRoot(false)
+    const response = await axios.get(`/verbs/${spanishWord.toLowerCase()}`);
+    return response.data[0].meaning[0].infinitive || response.data[0].meaning[0].verb
+  }
+  async function getRootFromEnglish(englishWord) {
+    try {
+      const englishToSpanishRoot = await axios.get(`/roots/en/${englishWord.toLowerCase()}`);
+      setIsRoot(true)
+      return englishToSpanishRoot.data[0].word
+    } catch (error) {
+      return null
+    }
+  }
   async function isRootAlready(inputSpanishWord) {
     try {
       const response = await axios.get(`/verbs/${inputSpanishWord.toLowerCase()}`);
@@ -103,7 +103,7 @@ async function getRootFromEnglish(englishWord) {
   }
   function validEnVerb(string) {
     let wordBreak = string.split(' ');
-  
+
     // Check if the first word is 'to'
     if (wordBreak[0].toLowerCase() === "to") {
       // If so, remove it and join the remaining words back together
@@ -123,43 +123,47 @@ async function getRootFromEnglish(englishWord) {
     setCurrentWord(input.current.value)
     setIsLoaded(false);
     setLoading(true);
-      const root = await getRoot(validEnVerb(word))
-      const allVerbsForTable = await axios.get(`/roots/${root}`);
-      const result = await axios.get(`/verbs/${word.toLowerCase()}`);
-      if(result.data.length === 0) {
-        const english = await axios.get(`/verbs/${root.toLowerCase()}`)
-        if(english.data.length === 0) {
-          setError("No word found. Check the spelling")
-          setResult([])
-        } 
-        else setResult(english.data)
+    const root = await getRoot(validEnVerb(word))
+    const allVerbsForTable = await axios.get(`/roots/${root}`);
+    const result = await axios.get(`/verbs/${word.toLowerCase()}`);
+    if (result.data.length === 0) {
+      const english = await axios.get(`/verbs/${root.toLowerCase()}`)
+      if (english.data.length === 0) {
+        setError("No word found. Check the spelling")
+        setResult([])
       }
-      else setResult(result.data)
-  
-      setAllWords(allVerbsForTable.data);
-      setIsLoaded(true);
-      setLoading(false);
+      else setResult(english.data)
     }
+    else setResult(result.data)
 
-function clearInput(e){
-  e.preventDefault()
-  input.current.value = ''
-  input.current.focus()
-  setSuggestions([])
-}
-  
-const handleKeyPress = (event) => {
-  if (event.key === 'ArrowUp') {
-    event.preventDefault()
-    setSelectedIndex(prev => Math.max(0, prev - 1))
-    input.current.value=suggestions[selectedIndex === 0 ? selectedIndex : selectedIndex - 1].word
-  } else if (event.key === 'ArrowDown') {
-    setSelectedIndex(prev => Math.min(suggestions.length - 1, prev + 1))
-    input.current.value=suggestions[selectedIndex === suggestions.length - 1  ? selectedIndex : selectedIndex + 1].word
+    setAllWords(allVerbsForTable.data);
+    setIsLoaded(true);
+    setLoading(false);
   }
+
+  function clearInput(e) {
+    e.preventDefault()
+    input.current.value = ''
+    input.current.focus()
+    setSuggestions([])
+  }
+
   
-  
-};
+  const handleArrowKeyDown = () => {
+
+    if (selectedIndex === suggestions.length - 1) return;
+    setSelectedIndex(prev => prev + 1)
+    input.current.value = suggestions[selectedIndex + 1].word
+    console.log(selectedIndex)
+  };
+
+  const handleArrowKeyUp = (e) => {
+    e.preventDefault()
+    if (selectedIndex === 0) return;
+    setSelectedIndex(prev => prev - 1)
+    input.current.value = suggestions[selectedIndex - 1].word
+
+  };
   function setMood(direction) {
     let lastIndex = tenses.length - 1
     if (direction === 'left') {
@@ -178,19 +182,22 @@ const handleKeyPress = (event) => {
       <header>
         <h1>Spanish Verbs</h1>
         <section className='searchBar'>
-        <form tabIndex={-1} onKeyDown={handleKeyPress} >
-          <input autoFocus='on' spellcheck="false" className={suggestions.length > 0 ? 'suggestionsOn' : ''} ref={input} autoComplete='off' onChange={(e) => inputChange(e.target.value)} placeholder='Conjugate' name='word' ></input>
-          <button onClick={(e) => handleSubmit(e, input.current.value)}><img src={Arrow} alt='arrow icon'></img></button>
-          <button className={suggestions.length === 0 ? "clearButton hide" : "clearButton"} onClick={(e) => clearInput(e)}><img src={Clear} alt='clear icon'></img></button>
-        </form>
-        <ul className={suggestions.length===0 ? 'suggestions hidden' : ' suggestions'}>
-            {suggestions.map((suggestion,index) => (
-              <li onClick={(e) => handleSubmit(e, suggestion.word)} key={index} className={index === selectedIndex ? 'selected suggestion' : 'suggestion'}>{suggestion.word} {suggestion.translation && '('+suggestion.translation[0]+')'}</li>
+          <form tabIndex={-1} onKeyDown={e => {
+            if (e.key === "ArrowDown") handleArrowKeyDown();
+            if (e.key === "ArrowUp") handleArrowKeyUp(e);
+          }}>
+            <input autoFocus='on' spellcheck="false" className={suggestions.length > 0 ? 'suggestionsOn' : ''} ref={input} autoComplete='off' onChange={(e) => inputChange(e.target.value)} placeholder='Conjugate' name='word' ></input>
+            <button onClick={(e) => handleSubmit(e, input.current.value)}><img src={Arrow} alt='arrow icon'></img></button>
+            <button className={suggestions.length === 0 ? "clearButton hide" : "clearButton"} onClick={(e) => clearInput(e)}><img src={Clear} alt='clear icon'></img></button>
+          </form>
+          <ul className={suggestions.length === 0 ? 'suggestions hidden' : ' suggestions'}>
+            {suggestions.map((suggestion, index) => (
+              <li onClick={(e) => handleSubmit(e, suggestion.word)} key={index} className={index === selectedIndex ? 'selected suggestion' : 'suggestion'}>{suggestion.word} {suggestion.translation && '(' + suggestion.translation[0] + ')'}</li>
             ))}
           </ul>
         </section>
-        
-        
+
+
         <span className='note'>type a word in Spanish or English</span>
       </header>
 
@@ -209,7 +216,7 @@ const handleKeyPress = (event) => {
 
         {isLoaded && result.map((word, index) => (
           <section key={index} className='resultPanel'>
-            
+
             {isRoot ?
               <ResultPanelRoot word={word} tableRequested={tableRequested} setTableRequested={setTableRequested} /> :
               <ResultPanelVerb word={word} tableRequested={tableRequested} setTableRequested={setTableRequested} />}
