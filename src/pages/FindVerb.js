@@ -154,7 +154,7 @@ function FindVerb() {
     if (selectedIndex === suggestions.length - 1) return;
     setSelectedIndex(prev => prev + 1)
     input.current.value = suggestions[selectedIndex + 1].word
-    console.log(selectedIndex)
+
   };
 
   const handleArrowKeyUp = (e) => {
